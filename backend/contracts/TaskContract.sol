@@ -19,6 +19,7 @@ contract TaskContract {
   // e.g. ----> {0: '0xsteve...7a'}, {1: '0xnikki...7a'}
   mapping(uint256 => address) taskToOwner;
 
+  // add tasks
   function addTask(string memory taskText, bool isDeleted) external {
     // set the task id
     uint taskId = tasks.length;
@@ -49,6 +50,13 @@ contract TaskContract {
     }
 
     return result;
+  }
 
+  // delete tasks
+  function deleteTask(uint taskId, bool isDeleted) external {
+    if (taskToOwner[taskId] == msg.sender) {
+      tasks[taskId].isDeleted = isDeleted;
+      emit DeleteTask(task, isDeleted);
+    }
   }
 }
