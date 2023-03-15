@@ -14,13 +14,13 @@ const tasks = [
 ]
 */
 
-export default function Home() {
+export default (Home) => {
+  const [correctNetwork, setCorrectNetwork] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [currentAccount, setCurrentAccount] = useState("");
+
   // Calls Metamask to connect wallet on clicking Connect Wallet button
   const connectWallet = async () => {
-    const [correctNetwork, setCorrectNetwork] = useState(false);
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-    const [currentAccount, setCurrentAccount] = useState("");
-
     try {
       const { ethereum } = window;
       if (!ethereum) {
@@ -30,7 +30,7 @@ export default function Home() {
       let chainId = await ethereum.request({ method: "eth_chainId" });
       console.log("Connected to chain:", chainId);
 
-      const goerliChainId = "0x4";
+      const goerliChainId = "0x6";
       if (chainId !== goerliChainId) {
         alert("You are not connected to the Goerli testnet!");
         setCorrectNetwork(false);
@@ -61,8 +61,8 @@ export default function Home() {
 
   return (
     <div className="bg-[#97b5fe] h-screen w-screen flex justify-center py-6">
-      {!"is user not logged in?" ? (
-        <ConnectWalletButton />
+      {"is user not logged in?" ? (
+        <ConnectWalletButton connectWallet={connectWallet} />
       ) : "is this the correct network?" ? (
         <TodoList />
       ) : (
@@ -70,4 +70,4 @@ export default function Home() {
       )}
     </div>
   );
-}
+};
