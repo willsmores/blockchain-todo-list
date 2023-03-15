@@ -30,7 +30,7 @@ export default (Home) => {
       let chainId = await ethereum.request({ method: "eth_chainId" });
       console.log("Connected to chain:", chainId);
 
-      const goerliChainId = "0x6";
+      const goerliChainId = "0x5";
       if (chainId !== goerliChainId) {
         alert("You are not connected to the Goerli testnet!");
         setCorrectNetwork(false);
